@@ -15,6 +15,7 @@
 		7E59AC5824CE3855004E09D7 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E59AC5524CE3855004E09D7 /* Canvas.swift */; };
 		7E59AC5924CE3855004E09D7 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E59AC5624CE3855004E09D7 /* Line.swift */; };
 		7E59AC5A24CE3855004E09D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E59AC5724CE3855004E09D7 /* ViewController.swift */; };
+		7E59AC5C24CE472F004E09D7 /* ResizableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E59AC5B24CE472F004E09D7 /* ResizableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		7E59AC5524CE3855004E09D7 /* Canvas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 		7E59AC5624CE3855004E09D7 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		7E59AC5724CE3855004E09D7 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../../../Projects/DrawOnImages/DrawOnImages/ViewController.swift; sourceTree = "<group>"; };
+		7E59AC5B24CE472F004E09D7 /* ResizableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				7E59AC5524CE3855004E09D7 /* Canvas.swift */,
 				7E59AC5624CE3855004E09D7 /* Line.swift */,
 				7E59AC5724CE3855004E09D7 /* ViewController.swift */,
+				7E59AC5B24CE472F004E09D7 /* ResizableView.swift */,
 			);
 			path = PhotoAnnotations;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 			files = (
 				7E59AC5A24CE3855004E09D7 /* ViewController.swift in Sources */,
 				7E59AC4224CE3804004E09D7 /* AppDelegate.swift in Sources */,
+				7E59AC5C24CE472F004E09D7 /* ResizableView.swift in Sources */,
 				7E59AC4424CE3804004E09D7 /* SceneDelegate.swift in Sources */,
 				7E59AC5824CE3855004E09D7 /* Canvas.swift in Sources */,
 				7E59AC5924CE3855004E09D7 /* Line.swift in Sources */,
@@ -292,8 +296,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = PX67L97P4V;
+				DEVELOPMENT_TEAM = G26U3W38S4;
 				INFOPLIST_FILE = PhotoAnnotations/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -301,6 +306,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tobiaslewinzon.PhotoAnnotations;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -317,7 +323,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tobiaslewinzon.PhotoAnnotations;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tobiaslewinzon.PhotoAnnotations2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
