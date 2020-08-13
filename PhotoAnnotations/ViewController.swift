@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         addBackgroundImage()
         addCanvasView()
         addControls()
-        addResizableView()
+        addTapGesture()
     }
     
     // MARK: - View configuration
@@ -41,6 +41,13 @@ class ViewController: UIViewController {
         view.addSubview(imageView)
     }
     
+    /// Adds tap gesture recognizer to exit textField editing.
+    private func addTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    /// Adds all controls on screen.
     private func addControls() {
         
         // Undo button.
@@ -93,6 +100,17 @@ class ViewController: UIViewController {
         saveButton.layer.cornerRadius = 12
         saveButton.clipsToBounds = true
         
+        // Text button.
+        let addTextButton = UIButton(type: .system)
+        addTextButton.setTitle("[ t ]", for: .normal)
+        addTextButton.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        addTextButton.titleLabel?.textColor = .white
+        addTextButton.tintColor = .white
+        addTextButton.backgroundColor = .darkGray
+        addTextButton.addTarget(self, action: #selector(addText), for: .touchUpInside)
+        addTextButton.layer.cornerRadius = 12
+        addTextButton.clipsToBounds = true
+        
         // Stack view containing undo, clear and color buttons.
         let stack = UIStackView(arrangedSubviews: [undoButton, color1Button, color2Button, color3Button ,clearButton])
         stack.distribution = .fillEqually
@@ -101,7 +119,7 @@ class ViewController: UIViewController {
         view.addSubview(stack)
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        stack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        stack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
         stack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
         
         // Save button constraints.
@@ -110,6 +128,14 @@ class ViewController: UIViewController {
         saveButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
         saveButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
         saveButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        
+        // Text button constraints.
+        view.addSubview(addTextButton)
+        addTextButton.translatesAutoresizingMaskIntoConstraints = false
+        addTextButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        addTextButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        addTextButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
+        addTextButton.bottomAnchor.constraint(equalTo: stack.topAnchor, constant: -20).isActive = true
     }
     
     /// Removes all elements intended to be excluded from saved image.
@@ -121,15 +147,6 @@ class ViewController: UIViewController {
                 button.removeFromSuperview()
             }
         }
-    }
-    
-    private func addResizableView() {
-        let resizable = ResizableView()
-        resizable.backgroundColor = .red
-        
-        resizable.frame = CGRect(x: 10, y: 10, width: 100, height: 100)
-        
-        view.addSubview(resizable)
     }
     
     // MARK: - Action methods
@@ -158,27 +175,126 @@ class ViewController: UIViewController {
         // Restore view.
         addControls()
     }
-}
-
-extension UIImage {
     
-    /// Generates image with passed view drawn as a snapshot.
-    convenience init(view: UIView) {
-        // Create image context from desired view's frame (size and position)
-        UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.isOpaque, 0.0)
+    /// Adds a new textField centered on the view.
+    @objc func addText() {
         
-        // Call drawHierarchy on view. This method renders the view content into the current image context.
-        // afterScreenUpdates waits for the IU changes to be rendered before drawing.
-        view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+        canvas.isHandlingLabel = true
+    
+        // Create label centered on screen.
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+        textField.center = canvas.center
         
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        textField.text = "Tap to edit. Pinch to scale and rotate."
         
-        if let image = image?.cgImage {
-            self.init(cgImage: image)
-        } else {
-            self.init()
+        addGestureRecognizers(to: textField)
+        
+        view.addSubview(textField)
+    }
+    
+    /// Resigns first responder on any textField.
+    @objc func handleTap() {
+        for view in view.subviews {
+            guard let textField = view as? UITextField else { continue }
+            textField.resignFirstResponder()
         }
     }
 }
 
+// MARK: - Gestures
+extension ViewController {
+    
+    func addGestureRecognizers(to textField: UITextField) {
+        // Create UIGestureRecognizers and setup delegate.
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotate(_:)))
+        
+        pinchGesture.delegate = self
+        panGesture.delegate = self
+        rotateGesture.delegate = self
+        
+        // Adding them to passed view.
+        textField.addGestureRecognizer(pinchGesture)
+        textField.addGestureRecognizer(panGesture)
+        textField.addGestureRecognizer(rotateGesture)
+        
+        // Setup textField
+        textField.isUserInteractionEnabled = true
+        textField.translatesAutoresizingMaskIntoConstraints = true
+        textField.delegate = self
+        textField.textColor = .white
+        textField.backgroundColor = .black
+        
+        // User is mow handling a textField
+        canvas.isHandlingLabel = true
+    }
+    
+    /// Called when pinch is detected.
+    /// - Parameter gesture: Contains an instance of the view affected by the gesture to apply needed transformations.
+    @objc func handlePinch(_ gesture: UIPinchGestureRecognizer) {
+        // Guard view.
+        guard let gestureView = gesture.view else { return }
+        
+        gestureView.transform = gestureView.transform.scaledBy(x: gesture.scale,
+                                                               y: gesture.scale)
+        // Set to default.
+        gesture.scale = 1
+    }
+    
+    /// Called when pan is detected.
+    /// - Parameter gesture: Contains an instance of the view affected by the gesture to apply needed transformations.
+    @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
+        // Amount of movement.
+        let translation = gesture.translation(in: view)
+        
+        // Get the view the gesture is manifested in and make changes to it. This is nice since we do not need an instance of the view, it comes with this gesture parameter.
+        guard let gestureView = gesture.view else { return }
+        
+        gestureView.center = CGPoint(x: gestureView.center.x + translation.x,
+                                     y: gestureView.center.y + translation.y)
+        
+        // Ensure translations don't add up every time. Set to default.
+        gesture.setTranslation(.zero, in: view)
+    }
+    
+    /// Called when rotate is detected.
+    /// - Parameter gesture: Contains an instance of the view affected by the gesture to apply needed transformations.
+    @objc func handleRotate(_ gesture: UIRotationGestureRecognizer) {
+         // Guard view.
+           guard let gestureView = gesture.view else {
+             return
+           }
+
+           gestureView.transform = gestureView.transform.rotated(by: gesture.rotation)
+           
+           // Set to default.
+           gesture.rotation = 0
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate.
+
+extension ViewController: UIGestureRecognizerDelegate {
+    // Allows multiple gestures on a single view.
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
+
+// MARK: - UITextViewDelegate
+
+extension ViewController: UITextFieldDelegate {
+    
+    /// Runs when user taps on textField to edit.
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // To avoid textFields hidden below the keyboard, force them on the center when edited.
+        textField.center = view.center
+    }
+    
+    /// Runs every time a change is made on the textField text.
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        // Adjust size every time.
+        textField.sizeToFit()
+    }
+}

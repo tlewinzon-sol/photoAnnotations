@@ -10,19 +10,30 @@ import UIKit
 
 class Canvas: UIView {
     
-    // MARK: Global properties
+    // MARK: Global properties and setup.
     var lines = [Line]()
     
     var color = UIColor.white
     
+    // Keeps track of user handling a label to prevent drawing. 
+    var isHandlingLabel = false
+
     // MARK: - Drawing
+    
     // 1- When user taps on screen, create an empty Line and append it to our lines array. This will initiate a new line instance to which we add points as the user drags on the method below.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        // Do nothing if user is handling a label.
+        guard !isHandlingLabel else { return }
+        
         lines.append(Line(color: color, points: []))
     }
     
     // 2- Called when user drags through screen.
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        // Do nothing if user is handling a label.
+        guard !isHandlingLabel else { return }
         
         // Guard the current point.
         guard let point = touches.first?.location(in: nil) else { return }
@@ -43,6 +54,10 @@ class Canvas: UIView {
     
     // 3- Time to draw.
     override func draw(_ rect: CGRect) {
+        
+        // Do nothing if user is handling a label.
+        guard !isHandlingLabel else { return }
+        
         super.draw(rect)
         
         guard let context = UIGraphicsGetCurrentContext() else { return }
@@ -82,6 +97,7 @@ class Canvas: UIView {
     
     /// Updates color
     func changeColor(to color: UIColor) {
+        isHandlingLabel = false
         self.color = color
     }
 }

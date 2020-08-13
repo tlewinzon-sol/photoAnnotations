@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7E3826B524CF2D130046B1E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3826B424CF2D130046B1E9 /* ViewController.swift */; };
+		7E502BD624E425CD001BF569 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E502BD524E425CD001BF569 /* Extensions.swift */; };
 		7E59AC4224CE3804004E09D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E59AC4124CE3804004E09D7 /* AppDelegate.swift */; };
 		7E59AC4424CE3804004E09D7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E59AC4324CE3804004E09D7 /* SceneDelegate.swift */; };
 		7E59AC4924CE3804004E09D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E59AC4724CE3804004E09D7 /* Main.storyboard */; };
@@ -15,11 +16,11 @@
 		7E59AC4E24CE3805004E09D7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E59AC4C24CE3805004E09D7 /* LaunchScreen.storyboard */; };
 		7E59AC5824CE3855004E09D7 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E59AC5524CE3855004E09D7 /* Canvas.swift */; };
 		7E59AC5924CE3855004E09D7 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E59AC5624CE3855004E09D7 /* Line.swift */; };
-		7E59AC5C24CE472F004E09D7 /* ResizableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E59AC5B24CE472F004E09D7 /* ResizableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7E3826B424CF2D130046B1E9 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7E502BD524E425CD001BF569 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7E59AC3E24CE3804004E09D7 /* PhotoAnnotations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoAnnotations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E59AC4124CE3804004E09D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7E59AC4324CE3804004E09D7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -29,7 +30,6 @@
 		7E59AC4F24CE3805004E09D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7E59AC5524CE3855004E09D7 /* Canvas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 		7E59AC5624CE3855004E09D7 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
-		7E59AC5B24CE472F004E09D7 /* ResizableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +71,7 @@
 				7E59AC5524CE3855004E09D7 /* Canvas.swift */,
 				7E59AC5624CE3855004E09D7 /* Line.swift */,
 				7E3826B424CF2D130046B1E9 /* ViewController.swift */,
-				7E59AC5B24CE472F004E09D7 /* ResizableView.swift */,
+				7E502BD524E425CD001BF569 /* Extensions.swift */,
 			);
 			path = PhotoAnnotations;
 			sourceTree = "<group>";
@@ -148,7 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E59AC4224CE3804004E09D7 /* AppDelegate.swift in Sources */,
-				7E59AC5C24CE472F004E09D7 /* ResizableView.swift in Sources */,
+				7E502BD624E425CD001BF569 /* Extensions.swift in Sources */,
 				7E59AC4424CE3804004E09D7 /* SceneDelegate.swift in Sources */,
 				7E3826B524CF2D130046B1E9 /* ViewController.swift in Sources */,
 				7E59AC5824CE3855004E09D7 /* Canvas.swift in Sources */,
@@ -298,7 +298,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = G26U3W38S4;
+				DEVELOPMENT_TEAM = PX67L97P4V;
 				INFOPLIST_FILE = PhotoAnnotations/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
